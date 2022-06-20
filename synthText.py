@@ -186,6 +186,11 @@ for im_name in images:
 
                 image.paste(ImageOps.colorize(Image_rotated_txt, (0,0,0), textColor),
                             (x0,y0),  Image_rotated_txt)
+                
+                image_arr = np.array(image)
+                im_top = np.array(ImageOps.colorize(Image_rotated_txt, (0, 0, 0), textColor))
+                image = cv2.seamlessClone(im_top, image_arr, np.array(Image_rotated_txt), (x0 + ww // 2, y0 + hh // 2),
+                                           cv2.MIXED_CLONE)
 
 
                 img_fn = '{}_{}.jpg'.format(im_name.split('.')[0], j)
