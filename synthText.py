@@ -191,6 +191,7 @@ for im_name in images:
                 
                 image_arr = np.array(image)
                 im_back = image_arr[y0:y0 + hh, x0:x0 + ww, :]
+                im_top = np.array(ImageOps.colorize(Image_rotated_txt, (0, 0, 0), textColor))
                 l_out = blit_images(im_top, im_back.copy())
                 image_arr[y0:y0 + hh, x0:x0 + ww, :] = l_out
                 image = Image.fromarray(image_arr)
