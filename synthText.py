@@ -11,6 +11,8 @@ from colorpair import getColorText
 
 import matplotlib.font_manager
 
+from poisson_reconstruct import blit_images
+
 
 win_fonts = matplotlib.font_manager.findSystemFonts(fontpaths=None, fontext='ttf')
 
@@ -188,9 +190,13 @@ for im_name in images:
                 #             (x0,y0),  Image_rotated_txt)
                 
                 image_arr = np.array(image)
-                im_top = np.array(ImageOps.colorize(Image_rotated_txt, (0, 0, 0), textColor))
-                image = cv2.seamlessClone(im_top, image_arr, np.array(Image_rotated_txt), (x0 + ww // 2, y0 + hh // 2),
-                                           cv2.MIXED_CLONE)
+                im_back = image_arr[y0:y0 + hh, x0:x0 + ww, :]
+                l_out = blit_images(im_top, im_back.copy())
+                image_arr[y0:y0 + hh, x0:x0 + ww, :] = l_out
+                image = Image.fromarray(image_arr)
+                # im_top = np.array(ImageOps.colorize(Image_rotated_txt, (0, 0, 0), textColor))
+                # image = cv2.seamlessClone(im_top, image_arr, np.array(Image_rotated_txt), (x0 + ww // 2, y0 + hh // 2),
+                #                           cv2.MIXED_CLONE)
                 image = Image.fromarray(image)
 
 
